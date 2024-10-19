@@ -16,4 +16,7 @@ nltk==3.9.1
 fastapi
 uvicorn
 tensorflow
+spacy
 pyrebase4
+numpy
+pandas
