@@ -211,7 +211,7 @@ def map_symptoms_to_onehot(user_symptoms, symptom_dict):
 def send_via_email(name, email, phone, date, location, description):
 
     sender_email = "healo.healthcare@gmail.com"
-    sender_password = "rypg alhj rkbh eaaw"
+    sender_password = os.getenv('PASSWORD')
     message = MIMEMultipart()
     message['From'] = sender_email
     message['To'] = email
@@ -246,6 +246,16 @@ def send_via_email(name, email, phone, date, location, description):
         print(f"Appointment request confirmation has been sent to {email}")
     except Exception as e:
         print(f"Error: {e}")
+config = {
+    "apiKey": os.getenv('FIREBASE_API'),
+    "authDomain": os.getenv('FIREBASE_AUTH'),
+    "databaseURL": os.getenv('DB_URL'),
+    "projectId": os.getenv('FIREBASE_ID'),
+    "storageBucket": os.getenv('STORAGE_BUCKET'),
+    "messagingSenderId": os.getenv('MESSAGING_ID'),
+    "appId": os.getenv('APP_ID'),
+    "measurementId": os.getenv('MEASUREMENT_ID')
+}
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 WATSON_URL = os.getenv('WATSON_URL')
