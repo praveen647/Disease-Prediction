@@ -210,8 +210,8 @@ def map_symptoms_to_onehot(user_symptoms, symptom_dict):
     return one_hot_vector
 def send_via_email(name, email, phone, date, location, description):
 
-    sender_email = "mimiraiteam@gmail.com"
-    sender_password = "mied nyvb wpyh auys"
+    sender_email = "healo.healthcare@gmail.com"
+    sender_password = "rypg alhj rkbh eaaw"
     message = MIMEMultipart()
     message['From'] = sender_email
     message['To'] = email
