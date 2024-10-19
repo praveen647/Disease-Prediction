@@ -22,7 +22,6 @@ import random
 import string
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import tensorflow as tf
 import json
 import requests
 
