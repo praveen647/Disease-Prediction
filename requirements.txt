@@ -15,5 +15,5 @@ unstructured
 nltk==3.9.1
 fastapi
 uvicorn
-nest_asyncio
-pyngrok
+tensorflow
+pyrebase4
