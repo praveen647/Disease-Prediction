@@ -18,4 +18,3 @@ uvicorn
 tensorflow
 spacy
 pyrebase4
-pandas
