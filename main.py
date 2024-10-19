@@ -3,7 +3,6 @@ import json
 import pickle
 import nltk
 from nltk.stem import WordNetLemmatizer
-from tensorflow.keras.models import load_model
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
