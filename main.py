@@ -358,6 +358,7 @@ def put_data(name, email, phone, date, location, description,uid):
     db.child("Users").child(uid).push(data)
 class INPUT(BaseModel):
   query:str
+  userid:str
 
 class EMAIL(BaseModel):
   name:str
@@ -385,6 +386,7 @@ def base():
 @app.post('/create')
 def chat(request:INPUT):
   query = request.query
+  userid = request.userid
   cleaned_input = preprocess(query)
   cleanest_input = [i for i in cleaned_input if i != ' ']
   if len(cleanest_input)>2:
@@ -401,10 +403,10 @@ def chat(request:INPUT):
         disease = "More Symptomps needed"
   else:
     disease = "More Symptomps needed"
-  context = fetch_context("U2")
+  context = fetch_context(userid)
   prompt = generate_prompt(query,context,disease)
   result = ask_watson(prompt)
-  put_context("U2",query,result)
+  put_context(userid,query,result)
   if disease=="More Symptomps needed":
      return {"response":result,"result":None}
   return {"response":result,"result":disease}
