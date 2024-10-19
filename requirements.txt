@@ -18,5 +18,4 @@ uvicorn
 tensorflow
 spacy
 pyrebase4
-numpy
 pandas
