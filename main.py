@@ -381,7 +381,6 @@ def put_data(name, email, phone, date, location, description,uid):
     db.child("Users").child(uid).push(data)
 class INPUT(BaseModel):
   query:str
-  userid:str
 
 class EMAIL(BaseModel):
   name:str
