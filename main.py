@@ -11,6 +11,7 @@ import os
 from fastapi import FastAPI, HTTPException
 import uvicorn
 import os
+from langchain_google_genai import ChatGoogleGenerativeAI
 import pyrebase
 import re
 import spacy
@@ -31,6 +32,28 @@ nlp = spacy.load("en_core_web_sm")
 loaded_encoder = joblib.load('label_encoder.pkl')
 API_KEY = os.getenv('API_KEY')
 symptom_dict = sym_dict
+os.environ["GOOGLE_API_KEY"] = os.getenv('GEMINI_API')
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash",temperature=0.3,max_tokens=None)
+system_prompt = (
+    "You are an assistant for question-answering tasks about medical data and it's remedies "
+    "Use the following context to answer"
+    "the question.Highlight the problem in bold. If you don't know the answer, say that you "
+    "don't know and don't mention that you are provided with context and act like human. Generate your reply to be conversational"
+    "don't stick only to the context mention things you know"
+    "\n\n"
+    "{context}"
+)
+
+from langchain_core.prompts import ChatPromptTemplate
+prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human", "{input}"),
+    ]
+)
+
+from langchain.chains import LLMChain
+chain = LLMChain(llm=llm, prompt=prompt)
 
 def preprocess(user_input):
     user_input = user_input.lower()
@@ -405,11 +428,11 @@ def chat(request:INPUT):
     disease = "More Symptomps needed"
   context = fetch_context(userid)
   prompt = generate_prompt(query,context,disease)
-  result = ask_watson(prompt)
+  result = chain.invoke({"input":query,"context":prompt})
   put_context(userid,query,result)
   if disease=="More Symptomps needed":
-     return {"response":result,"result":None}
-  return {"response":result,"result":disease}
+     return {"response":result['text'],"result":None}
+  return {"response":result['text'],"result":disease}
 @app.post('/send')
 def send_mail(request:EMAIL):
   send_via_email(request.name,request.email,request.phone,request.preferredDate,request.location,request.description)
