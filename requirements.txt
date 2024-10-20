@@ -9,3 +9,8 @@ uvicorn
 spacy
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.5.0/en_core_web_sm-3.5.0.tar.gz
 pyrebase4
+langchain
+langchain_community
+langchain-google-genai
+langchain_chroma
+langchainhub
