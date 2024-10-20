@@ -409,7 +409,6 @@ def base():
 @app.post('/create')
 def chat(request:INPUT):
   query = request.query
-  userid = request.userid
   cleaned_input = preprocess(query)
   cleanest_input = [i for i in cleaned_input if i != ' ']
   if len(cleanest_input)>2:
@@ -426,10 +425,10 @@ def chat(request:INPUT):
         disease = "More Symptomps needed"
   else:
     disease = "More Symptomps needed"
-  context = fetch_context(userid)
+  context = fetch_context("USER123")
   prompt = generate_prompt(query,context,disease)
   result = chain.invoke({"input":query,"context":prompt})
-  put_context(userid,query,result)
+  put_context("USER123",query,result)
   if disease=="More Symptomps needed":
      return {"response":result['text'],"result":None}
   return {"response":result['text'],"result":disease}
