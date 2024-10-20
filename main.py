@@ -427,7 +427,7 @@ def chat(request:INPUT):
   context = fetch_context("USER123")
   prompt = generate_prompt(query,context,disease)
   result = chain.invoke({"input":query,"context":prompt})
-  put_context("USER123",query,result)
+  put_context("USER123",query,result['text'])
   if disease=="More Symptomps needed":
      return {"response":result['text'],"result":None}
   return {"response":result['text'],"result":disease}
