@@ -409,6 +409,7 @@ def base():
 def chat(request:INPUT):
   query = request.query
   cleaned_input = preprocess(query)
+  disease = "disease"
   cleanest_input = [i for i in cleaned_input if i != ' ']
   if len(cleanest_input)>2:
     one_hot_input = map_symptoms_to_onehot(cleaned_input, symptom_dict)
@@ -417,9 +418,6 @@ def chat(request:INPUT):
         return sum(lst) == 0
     if(not(is_all_zeroes(one_hot_input))):
         sam =  np.array(one_hot_input,dtype=np.float32)
-        disease = predict(one_hot_input)
-        print(disease)
-        disease = disease[0]
     else:
         disease = "More Symptomps needed"
   else:
